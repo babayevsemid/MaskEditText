@@ -11,19 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val maskUtil = MaskUtil()
-        maskUtil.config("+994 ", "##-###-##-##", false)
-        maskUtil
-        maskUtil.startWith(
-            arrayListOf(
-                "+994 50",
-                "+994 51",
-                "+994 55",
-                "+994 60",
-                "+994 70",
-                "+994 77",
-                "+994 99"
-            )
-        )
+        maskUtil.config("", "## ### ## ##", false)
         maskUtil.setup(phoneEdt)
     }
 }

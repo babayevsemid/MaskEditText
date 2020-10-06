@@ -8,6 +8,8 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class MaskUtil {
     private var hideKeyboardWhenMaskComplete = true
@@ -31,6 +33,14 @@ class MaskUtil {
         hideKeyboardWhenMaskComplete = boolean
     }
 
+    fun setup(textInputLayout: TextInputLayout) {
+        textInputLayout.editText?.let { setup(it) }
+    }
+
+    fun setup(textInputEditText: TextInputEditText) {
+        setup(textInputEditText)
+    }
+
     fun setup(editText: EditText) {
         editText.setText(prefix)
         editText.filters = arrayOf(MaskFilter())
@@ -46,6 +56,7 @@ class MaskUtil {
         editText.addTextChangedListener(object : TextWatcher {
 
             var length_before = 0;
+            var editIndex = 0;
 
             override fun beforeTextChanged(
                 s: CharSequence,
@@ -54,6 +65,7 @@ class MaskUtil {
                 after: Int
             ) {
                 length_before = s.length
+                editIndex = start
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -72,6 +84,14 @@ class MaskUtil {
                     if (spaceIndexList.contains(s.length)) {
 
                         s.append(mask[s.length].toString())
+                    }
+
+                    val current = s.toString()
+
+                    for (i in current.indices) {
+                        if (mask[i].toString() != "#" && current[i] != mask[i]) {
+                            s.insert(i, mask[i].toString())
+                        }
                     }
 
                     if (s.length == mask.length && hideKeyboardWhenMaskComplete) {
