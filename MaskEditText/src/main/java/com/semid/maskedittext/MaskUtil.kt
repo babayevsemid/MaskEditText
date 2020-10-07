@@ -53,6 +53,8 @@ class MaskUtil {
             }
         }
 
+        var autoAdd = false;
+
         editText.addTextChangedListener(object : TextWatcher {
 
             var length_before = 0;
@@ -78,11 +80,10 @@ class MaskUtil {
                         (s[s.length - 1] == ' ' ||
                                 s[s.length - 1] == '+')
                     ) {
-                        s.replace(s.length - 1, s.length, "0")
+                        s.replace(s.length - 1, s.length, "")
                     }
 
                     if (spaceIndexList.contains(s.length)) {
-
                         s.append(mask[s.length].toString())
                     }
 
@@ -90,13 +91,29 @@ class MaskUtil {
 
                     for (i in current.indices) {
                         if (mask[i].toString() != "#" && current[i] != mask[i]) {
-                            s.insert(i, mask[i].toString())
+                            if (s.length == mask.length) {
+                                if (mask[i].toString() != "#" && current[i].isDigit()) {
+                                    s.delete(i + 1, i + 2)
+                                    s.insert(i - 1, mask[i - 1].toString())
+                                }
+                                return
+                            } else if (!current[i].isDigit()) {
+                                s.delete(i, i + 1)
+                                return
+                            }
+
+                            if (s.length != mask.length) {
+                                s.insert(i, mask[i].toString())
+                                break
+                            }
+                        } else if (mask[i].toString() == "#" && !current[i].isDigit()) {
+                            s.delete(i, i + 1)
                         }
                     }
+                }
 
-                    if (s.length == mask.length && hideKeyboardWhenMaskComplete) {
-                        editText.hideKeyboard()
-                    }
+                if (s.length == mask.length && hideKeyboardWhenMaskComplete) {
+                    editText.hideKeyboard()
                 }
             }
         })

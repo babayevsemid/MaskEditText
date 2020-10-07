@@ -18,7 +18,7 @@ public class TestActivity extends AppCompatActivity {
         TextInputLayout til = findViewById(R.id.til);
 
         MaskUtil maskUtil = new MaskUtil();
-        maskUtil.config("", "#### #### #### ####", false);
+        maskUtil.config("", "###-###-#-##", false);
         maskUtil.setup(til.getEditText());
     }
 }
