@@ -21,16 +21,15 @@
         android:id="@+id/cardTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mask="## #### #### ####"
-        app:prefix="12"
+        app:mask=" #### #### ####"
+        app:prefix="1234"
         app:staticPrefix="true"
         app:hideKeyboard="true">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:digits="1234567890 "
+            android:inputType="phone"
             android:imeOptions="actionDone" />
     </com.semid.maskedittext.MaskTextInputLayout>
 
