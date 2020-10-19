@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.Spanned
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -94,7 +95,7 @@ class MaskUtil {
                             if (s.length == mask.length) {
                                 if (mask[i].toString() != "#" && current[i].isDigit()) {
                                     s.delete(i + 1, i + 2)
-                                    s.insert(i - 1, mask[i - 1].toString())
+                                    s.insert(i - 1, mask[i].toString())
                                 }
                                 return
                             } else if (!current[i].isDigit()) {
@@ -130,9 +131,12 @@ class MaskUtil {
             dend: Int
         ): CharSequence? {
 
-            if (static && dstart < dend) {
+            if (static) {
                 if (!dest.subSequence(0, dstart).startsWith(prefix)) {
-                    return prefix.subSequence(dstart, dend)
+                    if (dstart < dend)
+                        return prefix.subSequence(dstart, dend)
+                    else
+                        return ""
                 }
             }
 
