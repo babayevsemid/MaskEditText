@@ -32,23 +32,24 @@ dependencies {
         android:nextFocusDown="@+id/til" />
 ```
 
-### With TextInputLayout 
+### With TextInputEditText
 
 ```
-<com.semid.maskedittext.MaskTextInputLayout
+ <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/cardTil"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mask="#### #### ####"
-        app:prefix="1234 " 
-        app:hideKeyboard="true">
+        android:layout_height="wrap_content">
 
-        <EditText
+        <com.semid.maskedittext.MaskTextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:imeOptions="actionDone" />
-    </com.semid.maskedittext.MaskTextInputLayout>
+            android:imeOptions="actionDone"
+            app:mask="#### #### ####"
+            app:prefix="1234 "
+            app:staticPrefix="true"
+            app:hideKeyboardWhenComplete="true" />
+    </com.google.android.material.textfield.TextInputLayout>
 ```
 
 ### Setup manual
