@@ -43,7 +43,7 @@ class MaskUtil {
         start(editText)
     }
 
-    private fun start(editText: EditText){
+    private fun start(editText: EditText) {
         this.editText = editText
         editText.setText(prefix)
         editText.filters = arrayOf(MaskFilter())
@@ -131,11 +131,14 @@ class MaskUtil {
             dstart: Int,
             dend: Int
         ): CharSequence? {
-
             if (static) {
-                if (!dest.subSequence(0, dstart).startsWith(prefix)) {
+                val editTextLength = dest.toString().length
+
+                if (editTextLength != 0 && editTextLength <= prefix.length &&
+                    !dest.subSequence(0, dstart).startsWith(prefix)
+                ) {
                     return if (dstart < dend) {
-                        prefix.subSequence(dstart, dend)
+                        prefix.substring(dstart, dend)
                     } else {
                         editText?.apply {
                             setSelection(text.length)
