@@ -1,6 +1,9 @@
 package com.semid.maskedittext
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.text.SpannableStringBuilder
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -47,6 +50,14 @@ fun String.mask(mask: String): String {
     }
 
     return maskedBuilder.toString()
+}
+
+internal fun Context?.copyToClipboard(text: String?) {
+    (this?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager)?.apply {
+        val clip = ClipData.newPlainText("Copied", text)
+
+        setPrimaryClip(clip)
+    }
 }
 
 internal fun EditText.setSelectionSafety(index: Int) {

@@ -8,6 +8,9 @@ import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import android.util.Log
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -29,6 +32,24 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
 
     init {
         initAttr(attrs)
+
+        customSelectionActionModeCallback = object : ActionMode.Callback {
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?):Boolean = true
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?) = true
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                if (item?.itemId == android.R.id.copy) {
+                    context.copyToClipboard(getUnMaskText())
+
+                    mode?.finish()
+                    return true
+                }
+                return false
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {
+            }
+        }
     }
 
     private fun initAttr(attrs: AttributeSet?) {
