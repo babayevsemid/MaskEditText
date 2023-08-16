@@ -26,24 +26,28 @@ internal fun MaskEditText.getUnMaskText(): String {
     return this.text?.filter { it.isDigit() }.toString()
 }
 
-fun String.mask(mask: String) = SpannableStringBuilder("").also {s->
-    val current = toString().replace(" ", "")
-    var digits = current.filter { it.isDigit() }
+fun String.mask(mask: String): String {
+    val current = replace(" ", "")
+    val digits = current.filter { it.isDigit() }
+
+    val maskedBuilder = StringBuilder()
+    var digitIndex = 0
 
     for (char in mask) {
         if (char == '#') {
-            if (digits.isNotEmpty()) {
-                s.insert(s.length, digits.first().toString())
-
-                digits = digits.removePrefix(digits.first().toString())
+            if (digitIndex < digits.length) {
+                maskedBuilder.append(digits[digitIndex])
+                digitIndex++
             } else {
                 break
             }
         } else {
-            s.insert(s.length, char.toString())
+            maskedBuilder.append(char)
         }
     }
-}.toString()
+
+    return maskedBuilder.toString()
+}
 
 internal fun EditText.setSelectionSafety(index: Int) {
     if (index >= 0 && index <= text.length)

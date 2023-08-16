@@ -28,10 +28,5 @@ class MainActivity : AppCompatActivity() {
             .observe(this) {
                 Log.e("phoneNumber", it)
             }
-
-        viewModel.text
-            .observe(this) {
-                Log.e("phoneNumber", it)
-            }
     }
 }
