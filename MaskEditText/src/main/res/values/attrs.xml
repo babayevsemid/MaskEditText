@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="prefix" format="string" />
+    <attr name="mask" format="string" />
+    <attr name="staticPrefix" format="boolean" />
+    <attr name="hideKeyboardWhenComplete" format="boolean" />
+
+    <declare-styleable name="MaskEditText">
+        <attr name="mask" />
+        <attr name="maskDividerColor" format="color" />
+        <attr name="hideKeyboardWhenComplete" />
+    </declare-styleable>
+
+    <declare-styleable name="MaskTextInputEditText">
+        <attr name="prefix" />
+        <attr name="mask" />
+        <attr name="staticPrefix" />
+        <attr name="hideKeyboardWhenComplete" />
+    </declare-styleable>
+</resources>

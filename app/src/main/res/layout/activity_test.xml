@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.semid.maskedittext.MaskEditText
+        android:id="@+id/staticEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mask="## ### ## ##"
+        app:prefix="+994 "
+        android:hint="+994 00 123 45 67"
+        app:staticPrefix="true"
+        app:hideKeyboardWhenComplete="false"
+        android:inputType="phone"
+        android:imeOptions="actionNext"
+        android:nextFocusDown="@+id/cardTil" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cardTil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.semid.maskedittext.MaskTextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:imeOptions="actionDone"
+            app:mask="#### #### ####"
+            app:prefix="1234 "
+            app:staticPrefix="true"
+            app:hideKeyboardWhenComplete="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="phone" />
+    </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>
