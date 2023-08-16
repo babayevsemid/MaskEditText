@@ -25,9 +25,7 @@ dependencies {
         android:layout_height="wrap_content"
         app:mask="## ### ## ##"
         app:hideKeyboard="false"
-        android:inputType="phone"
-        android:imeOptions="actionNext"
-        android:nextFocusDown="@+id/til" />
+        android:inputType="phone" />
 ```
 
 ### Setup manual
