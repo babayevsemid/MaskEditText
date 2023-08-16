@@ -7,13 +7,22 @@ import android.text.Spannable
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
+import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import kotlin.math.abs
 
 class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(context, attrs) {
+    private var onTextChanged: (Editable) -> Unit = {}
+
     private var hideKeyboardWhenMaskComplete = true
     private var mask = ""
     private var maskDividerColor: Int = -1
@@ -35,6 +44,12 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
         setup()
     }
 
+    fun doAfterTextChanged(action: (text: Editable?) -> Unit) {
+        onTextChanged = {
+            action.invoke(it)
+        }
+    }
+
     fun setMask(mask: String) {
         this.mask = mask
 
@@ -43,6 +58,10 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
 
     fun setHideKeyboardWhenMaskComplete(hide: Boolean) {
         this.hideKeyboardWhenMaskComplete = hide
+    }
+
+    fun setMaskDividerColor(color: Int) {
+        this.maskDividerColor = color
     }
 
     private fun setup() {
@@ -119,6 +138,7 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
 
                 checkMaskDividerColor(s)
 
+                onTextChanged.invoke(s)
                 addTextChangedListener(this)
             }
         })
@@ -141,23 +161,5 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
                 )
             }
         }
-    }
-
-    private fun EditText.setSelectionSafety(index: Int) {
-        if (index >= 0 && index <= text.length)
-            setSelection(index)
-    }
-
-    private fun String.subStringSafety(startIndex: Int, endIndex: Int): String {
-        if (startIndex < 0 || endIndex >= length || startIndex >= endIndex)
-            return this
-
-        return substring(startIndex, endIndex)
-    }
-
-    fun View.hideKeyboard() {
-        val imm: InputMethodManager =
-            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }
