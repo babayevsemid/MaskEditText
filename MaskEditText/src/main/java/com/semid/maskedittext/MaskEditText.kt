@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.widget.AppCompatEditText
+import kotlin.math.abs
 
 class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(context, attrs) {
     private var hideKeyboardWhenMaskComplete = true
@@ -61,6 +62,7 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
 
         addTextChangedListener(object : TextWatcher {
             var lengthBefore = 0
+            var lengthAfter = 0
             var editIndex = 0
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -73,14 +75,13 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
             }
 
             override fun afterTextChanged(s: Editable) {
+                lengthAfter = s.length
                 removeTextChangedListener(this)
-
-                val deleted = lengthBefore == s.length + 1
 
                 val current = s.toString().replace(" ", "")
                 var digits = current.filter { it.isDigit() }
 
-                if (deleted && mask.getOrNull(editIndex) != '#') {
+                if (lengthBefore == s.length + 1 && mask.getOrNull(editIndex) != '#') {
                     val index = mask.subStringSafety(0, editIndex).count { it == '#' }
 
                     if (editIndex > 1 && index > 0 && digits.isNotEmpty())
@@ -103,14 +104,14 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
                     }
                 }
 
-                if (deleted) {
-                    setSelectionSafety(
-                        mask.subStringSafety(0, editIndex + 1).indexOfLast { it == '#' })
-                } else {
-                    setSelectionSafety(
-                        mask.indexOf('#', editIndex + 1)
-                    )
-                }
+                setSelectionSafety(
+                    when {
+                        abs(lengthAfter - lengthBefore) > 1 -> s.length
+                        lengthAfter < lengthBefore -> mask.subStringSafety(0, editIndex + 1)
+                            .indexOfLast { it == '#' }
+                        else -> mask.indexOf('#', editIndex + 1)
+                    }
+                )
 
                 if (hideKeyboardWhenMaskComplete && s.length == mask.length) {
                     hideKeyboard()
