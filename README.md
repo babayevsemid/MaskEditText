@@ -23,10 +23,10 @@ dependencies {
 <com.semid.maskedittext.MaskEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="phone"
         app:mask="## ### ## ##"
         app:hideKeyboardWhenComplete="false"
-        app:maskDividerColor="@color/transparent"
-        android:inputType="phone" />
+        app:maskDividerColor="@color/transparent" />
 ```
 
 ### Setup manual
