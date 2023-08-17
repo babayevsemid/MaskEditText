@@ -41,8 +41,8 @@ app:hideKeyboardWhenComplete
 ### Setup manual
  
 ```
-   yourEditText.setMask(yourMask)
-   yourEditText.setHideKeyboardWhenMaskComplete(hideKeyboard)
+yourEditText.setMask(yourMask)
+yourEditText.setHideKeyboardWhenMaskComplete(hideKeyboard)
   
 ```
  
