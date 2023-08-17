@@ -17,7 +17,7 @@ dependencies {
 
 ```
 
-### With EditText 
+### Use
 
 ```
 <com.semid.maskedittext.MaskEditText
