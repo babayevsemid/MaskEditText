@@ -24,17 +24,7 @@ dependencies {
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"
-        app:mask="## ### ## ##"
-        app:hideKeyboardWhenComplete="false"
-        app:maskDividerColor="@color/transparent" />
-```
-
-### Setup manual
- 
-```
-   yourEditText.setMask(yourMask)
-   yourEditText.setHideKeyboardWhenMaskComplete(hideKeyboard)
-  
+        app:mask="## ### ## ##" />
 ```
  
 ### Attributes
@@ -46,5 +36,13 @@ app:hideKeyboardWhenComplete
 
 "123456789".mask("(##-(###)-(##)-(##)") <--> "(12)-(345)-(67)-(89)"
 "(12)-(345)-(67)-(89)".unMask() <--> "123456789"
+```
+
+### Setup manual
+ 
+```
+   yourEditText.setMask(yourMask)
+   yourEditText.setHideKeyboardWhenMaskComplete(hideKeyboard)
+  
 ```
  
