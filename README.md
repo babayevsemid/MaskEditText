@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-     implementation 'com.github.babayevsemid:MaskEditText:2.1.3'
+     implementation 'com.github.babayevsemid:MaskEditText:2.1.4'
 }
 
 ```
@@ -24,7 +24,8 @@ dependencies {
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:mask="## ### ## ##"
-        app:hideKeyboard="false"
+        app:hideKeyboardWhenComplete="false"
+        app:maskDividerColor="@color/transparent"
         android:inputType="phone" />
 ```
 
@@ -42,5 +43,8 @@ dependencies {
 app:mask
 app:maskDividerColor
 app:hideKeyboardWhenComplete
+
+String.mask(yourMask)  // "123456789".mask("(##-(###)-(##)-(##)") //result "(12)-(345)-(67)-(89)"
+String.unMask()  // "(12)-(345)-(67)-(89)".unMask() //result "123456789"
 ```
  
