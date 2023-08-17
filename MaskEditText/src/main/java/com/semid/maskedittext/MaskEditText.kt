@@ -1,11 +1,13 @@
 package com.semid.maskedittext
 
 import android.content.Context
+import android.os.Build
 import android.text.Editable
 import android.text.Spannable
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
+import android.util.Log
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
@@ -23,15 +25,38 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
         initAttr(attrs)
 
         customSelectionActionModeCallback = object : ActionMode.Callback {
-            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?):Boolean = true
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                menu?.removeItem(android.R.id.shareText)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    menu?.removeItem(android.R.id.textAssist)
+                }
+                return true
+            }
+
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?) = true
 
             override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-                if (item?.itemId == android.R.id.copy) {
-                    context.copyToClipboard(getUnMaskText())
+                when (item?.itemId) {
+                    android.R.id.copy->{
+                        val selectedText =
+                            text.toString().subStringSafety(selectionStart,selectionEnd)
 
-                    mode?.finish()
-                    return true
+                        context.copyToClipboard(selectedText.unMask())
+
+                        mode?.finish()
+                        return true
+                    }
+                    android.R.id.cut -> {
+                        val selectedText =
+                            text.toString().subStringSafety(selectionStart,selectionEnd)
+
+                        context.copyToClipboard(selectedText.unMask())
+                        setText(text.toString().removeRange(selectionStart,selectionEnd))
+
+                        mode?.finish()
+                        return true
+                    }
                 }
                 return false
             }
@@ -138,6 +163,7 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
                         abs(lengthAfter - lengthBefore) > 1 -> s.length
                         lengthAfter < lengthBefore -> mask.subStringSafety(0, editIndex + 1)
                             .indexOfLast { it == '#' }
+
                         else -> mask.indexOf('#', editIndex + 1)
                     }
                 )

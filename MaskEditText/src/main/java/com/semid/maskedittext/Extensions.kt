@@ -24,7 +24,11 @@ fun MaskEditText.setText(text: String?, listener: InverseBindingListener) {
 
 @InverseBindingAdapter(attribute = "android:text", event = "android:textChanged")
 internal fun MaskEditText.getUnMaskText(): String {
-    return this.text?.filter { it.isDigit() }.toString()
+    return this.text?.toString()?.unMask().orEmpty()
+}
+
+fun String.unMask(): String {
+    return filter { it.isDigit() }
 }
 
 fun String.mask(mask: String): String {
