@@ -44,7 +44,7 @@ app:mask
 app:maskDividerColor
 app:hideKeyboardWhenComplete
 
-String.mask(yourMask)  // "123456789".mask("(##-(###)-(##)-(##)") //result "(12)-(345)-(67)-(89)"
-String.unMask()  // "(12)-(345)-(67)-(89)".unMask() //result "123456789"
+"123456789".mask("(##-(###)-(##)-(##)") <--> "(12)-(345)-(67)-(89)"
+"(12)-(345)-(67)-(89)".unMask() <--> "123456789"
 ```
  
