@@ -4,6 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainVM:ViewModel() {
-    val phoneNumber = MutableLiveData("")
+    val phoneNumber = MutableLiveData("78687687687")
     val text = MutableLiveData("")
 }

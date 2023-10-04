@@ -12,13 +12,13 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 
 @BindingAdapter(value = ["android:text", "android:textChanged"], requireAll = false)
-fun MaskEditText.setText(text: String?, listener: InverseBindingListener) {
+fun MaskEditText.setText(text: String?, listener: InverseBindingListener?) {
     if (this.getUnMaskText() != text?.filter { it.isDigit() }.toString()) {
         this.setText(text)
     }
 
     doAfterTextChanged {
-        listener.onChange()
+        listener?.onChange()
     }
 }
 
