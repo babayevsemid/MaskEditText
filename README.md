@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-     implementation 'com.github.babayevsemid:MaskEditText:2.1.4'
+     implementation 'com.github.babayevsemid:MaskEditText:2.1.5'
 }
 
 ```
