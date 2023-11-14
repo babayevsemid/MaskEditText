@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.semid.edittextmask.databinding.ActivityMainBinding
 import com.semid.maskedittext.mask
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainVM>()
@@ -28,5 +31,19 @@ class MainActivity : AppCompatActivity() {
             .observe(this) {
                 Log.e("phoneNumber", it)
             }
+
+        lifecycleScope.launch {
+            binding.edt1.setMask("## ### ## ##")
+            delay(2000)
+            binding.edt1.setMask("#########")
+            delay(2000)
+            binding.edt1.setMask("##-###-##-##")
+            delay(2000)
+            binding.edt1.setMask("(##) (###) (##) (##)")
+            delay(2000)
+            binding.edt1.setMask("(##)-(###)-(##)-(##)")
+            delay(2000)
+            binding.edt1.setMask("")
+        }
     }
 }

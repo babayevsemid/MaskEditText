@@ -38,21 +38,22 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
 
             override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                 when (item?.itemId) {
-                    android.R.id.copy->{
+                    android.R.id.copy -> {
                         val selectedText =
-                            text.toString().subStringSafety(selectionStart,selectionEnd)
+                            text.toString().subStringSafety(selectionStart, selectionEnd)
 
                         context.copyToClipboard(selectedText.unMask())
 
                         mode?.finish()
                         return true
                     }
+
                     android.R.id.cut -> {
                         val selectedText =
-                            text.toString().subStringSafety(selectionStart,selectionEnd)
+                            text.toString().subStringSafety(selectionStart, selectionEnd)
 
                         context.copyToClipboard(selectedText.unMask())
-                        setText(text.toString().removeRange(selectionStart,selectionEnd))
+                        setText(text.toString().removeRange(selectionStart, selectionEnd))
 
                         mode?.finish()
                         return true
@@ -86,9 +87,17 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
     }
 
     fun setMask(mask: String) {
-        this.mask = mask
+        if (this.mask != mask) {
+            this.mask = mask
 
-        text = text
+            if (mask.trim().isEmpty()) {
+                setText("")
+            } else {
+                text = text
+            }
+
+            setSelectionSafety(text.toString().length)
+        }
     }
 
     fun setHideKeyboardWhenMaskComplete(hide: Boolean) {
@@ -129,6 +138,10 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
             }
 
             override fun afterTextChanged(s: Editable) {
+                if (!mask.contains("#")) {
+                    return
+                }
+
                 lengthAfter = s.length
                 removeTextChangedListener(this)
 
