@@ -17,7 +17,7 @@ fun MaskEditText.setText(text: String?, listener: InverseBindingListener?) {
         this.setText(text)
     }
 
-    doAfterTextChanged {
+    doAfterTextChangedInverse {
         listener?.onChange()
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.semid.edittextmask.databinding.ActivityMainBinding
@@ -25,25 +26,5 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.executePendingBindings()
-
-
-        viewModel.phoneNumber
-            .observe(this) {
-                Log.e("phoneNumber", it)
-            }
-
-        lifecycleScope.launch {
-            binding.edt1.setMask("## ### ## ##")
-            delay(2000)
-            binding.edt1.setMask("#########")
-            delay(2000)
-            binding.edt1.setMask("##-###-##-##")
-            delay(2000)
-            binding.edt1.setMask("(##) (###) (##) (##)")
-            delay(2000)
-            binding.edt1.setMask("(##)-(###)-(##)-(##)")
-            delay(2000)
-            binding.edt1.setMask("")
-        }
     }
 }

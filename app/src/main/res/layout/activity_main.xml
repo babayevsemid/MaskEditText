@@ -22,7 +22,7 @@
             android:inputType="phone"
             android:maxLines="1"
             android:hint="##-###-##-##"
-            android:text="@{viewModel.phoneNumber}"
+            android:text="@={viewModel.phoneNumber}"
             app:mask="##-###-##-##"
             android:singleLine="true"
             android:imeOptions="actionDone"

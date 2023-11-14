@@ -11,11 +11,14 @@ import android.util.Log
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.widget.addTextChangedListener
 import kotlin.math.abs
 
 class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(context, attrs) {
     private var onTextChanged: (Editable) -> Unit = {}
+    private var onTextChangedInverse: (Editable) -> Unit = {}
 
     private var hideKeyboardWhenMaskComplete = true
     private var mask = ""
@@ -86,6 +89,12 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
         }
     }
 
+    internal fun doAfterTextChangedInverse(action: (text: Editable?) -> Unit) {
+        onTextChangedInverse = {
+            action.invoke(it)
+        }
+    }
+
     fun setMask(mask: String) {
         if (this.mask != mask) {
             this.mask = mask
@@ -139,6 +148,8 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
 
             override fun afterTextChanged(s: Editable) {
                 if (!mask.contains("#")) {
+                    onTextChanged.invoke(s)
+                    onTextChangedInverse.invoke(s)
                     return
                 }
 
@@ -188,6 +199,7 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
                 checkMaskDividerColor(s)
 
                 onTextChanged.invoke(s)
+                onTextChangedInverse.invoke(s)
                 addTextChangedListener(this)
             }
         })
