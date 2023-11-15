@@ -23,7 +23,7 @@
             android:maxLines="1"
             android:hint="##-###-##-##"
             android:text="@={viewModel.phoneNumber}"
-            app:mask=""
+            app:mask="##-###-##-##"
             android:singleLine="true"
             android:imeOptions="actionDone"
             app:layout_constraintTop_toTopOf="parent" />
