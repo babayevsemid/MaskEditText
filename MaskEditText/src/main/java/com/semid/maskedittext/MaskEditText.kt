@@ -7,13 +7,10 @@ import android.text.Spannable
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
-import android.util.Log
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.widget.addTextChangedListener
 import kotlin.math.abs
 
 class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(context, attrs) {
@@ -194,10 +191,6 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
                         s.insert(s.length, char.toString())
                     }
                 }
-
-                Log.e("lengthAfter", lengthAfter.toString())
-                Log.e("lengthBefore", lengthBefore.toString())
-                Log.e("editIndex", editIndex.toString())
 
                 setSelectionSafety(
                     when {
