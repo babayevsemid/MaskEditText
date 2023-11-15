@@ -152,7 +152,9 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
             }
 
             override fun afterTextChanged(s: Editable) {
-                if (mask.contains("#") && s.length > mask.length) {
+                lengthAfter = s.length
+
+                if (mask.contains("#") && s.length > mask.length && abs(lengthAfter - lengthBefore) <= 1) {
                     val index = selectionStart
                     setText(beforeText)
                     setSelectionSafety(index - 1)
@@ -165,7 +167,6 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
                     return
                 }
 
-                lengthAfter = s.length
                 removeTextChangedListener(this)
 
                 val current = s.toString().replace(" ", "")
