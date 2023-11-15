@@ -195,13 +195,23 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
                     }
                 }
 
+                Log.e("lengthAfter", lengthAfter.toString())
+                Log.e("lengthBefore", lengthBefore.toString())
+                Log.e("editIndex", editIndex.toString())
+
                 setSelectionSafety(
                     when {
                         abs(lengthAfter - lengthBefore) > 1 -> s.length
                         lengthAfter < lengthBefore -> mask.subStringSafety(0, editIndex + 1)
                             .indexOfLast { it == '#' }
 
-                        else -> mask.indexOf('#', editIndex + 1)
+                        else -> {
+                            if (mask.subStringSafety(editIndex, editIndex + 1) != "#") {
+                                mask.indexOf('#', editIndex + 1) + 1
+                            } else {
+                                mask.indexOf('#', editIndex + 1)
+                            }
+                        }
                     }
                 )
 
