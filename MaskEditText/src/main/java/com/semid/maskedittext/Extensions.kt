@@ -63,13 +63,18 @@ internal fun Context?.copyToClipboard(text: String?) {
 }
 
 internal fun EditText.setSelectionSafety(index: Int) {
-    if (index >= 0 && index <= text.length)
+    if (index >= 0 && index <= text.length) {
         setSelection(index)
+    }
 }
 
-internal fun String.subStringSafety(startIndex: Int, endIndex: Int): String {
+internal fun String.subStringSafety(
+    startIndex: Int,
+    endIndex: Int,
+    default: String = this
+): String {
     if (startIndex < 0 || endIndex >= length || startIndex >= endIndex)
-        return this
+        return default
 
     return substring(startIndex, endIndex)
 }

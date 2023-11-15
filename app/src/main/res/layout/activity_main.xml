@@ -83,7 +83,7 @@
             android:imeOptions="actionDone"
             app:layout_constraintTop_toBottomOf="@id/edt4" />
 
-        <EditText
+        <com.semid.maskedittext.MaskEditText
             android:id="@+id/edt6"
             android:layout_width="match_parent"
             android:layout_height="56dp"

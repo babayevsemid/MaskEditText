@@ -206,7 +206,9 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
                             .indexOfLast { it == '#' }
 
                         else -> {
-                            if (mask.subStringSafety(editIndex, editIndex + 1) != "#") {
+                            val nextChar = mask.subStringSafety(editIndex, editIndex + 1, "")
+
+                            if (nextChar != "#" && nextChar.isNotEmpty()) {
                                 mask.indexOf('#', editIndex + 1) + 1
                             } else {
                                 mask.indexOf('#', editIndex + 1)
