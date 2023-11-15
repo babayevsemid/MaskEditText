@@ -133,14 +133,18 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
             }
         }
 
+
         addTextChangedListener(object : TextWatcher {
             var lengthBefore = 0
             var lengthAfter = 0
             var editIndex = 0
+            var beforeText = ""
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 lengthBefore = s.length
                 editIndex = start
+
+                beforeText = s.toString()
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -148,6 +152,13 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
             }
 
             override fun afterTextChanged(s: Editable) {
+                if (s.length > mask.length) {
+                    val index = selectionStart
+                    setText(beforeText)
+                    setSelectionSafety(index - 1)
+                    return
+                }
+
                 if (!mask.contains("#")) {
                     onTextChanged.invoke(s)
                     onTextChangedInverse.invoke(s)
