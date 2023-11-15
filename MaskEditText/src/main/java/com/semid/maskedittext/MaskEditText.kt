@@ -32,6 +32,7 @@ class MaskEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(c
                 menu?.removeItem(android.R.id.shareText)
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    menu?.removeItem(0)
                     menu?.removeItem(android.R.id.textAssist)
                 }
                 return true
